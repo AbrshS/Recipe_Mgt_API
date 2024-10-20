@@ -2,8 +2,8 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from users.views import RegisterView  # Assuming you've created this view
-from recipes.views import RecipeByCategoryView, RecipeByIngredientView, RecipeSearchView, RecipeFilterView, AddFavoriteRecipeView, FavoriteRecipesListView
-from recipes.views import RecipeReviewView, AddToFavoritesView, FavoriteRecipesListView 
+from recipes.views import RecipeReviewView, RecipeByCategoryView, RecipeByIngredientView, RecipeReviewListView, RecipeSearchView, RecipeFilterView, AddFavoriteRecipeView, FavoriteRecipesListView
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -23,10 +23,10 @@ urlpatterns = [
     path('api/recipes/filter/', RecipeFilterView.as_view(), name='recipe-filter'),
     
     
-    path('api/<int:recipe_id>/reviews/', RecipeReviewView.as_view(), name='recipe-reviews'),  # Reviews for a recipe
-    path('api/<int:recipe_id>/favorite/', AddToFavoritesView.as_view(), name='add-to-favorites'),  # Add to favorites
-    path('api/favorites/', FavoriteRecipesListView.as_view(), name='user-favorites'),  # User's favorite recipes
-
+    # path('api/<int:recipe_id>/reviews/', RecipeReviewView.as_view(), name='recipe-reviews'),
+      path('api/recipes/<int:recipe_id>/reviews/', RecipeReviewView.as_view(), name='recipe-reviews'),
+    
+    path('api/recipes/<int:recipe_id>/reviews/', RecipeReviewListView.as_view(), name='recipe-reviews'),
     # Add DRF session login for testing
     path('api-auth/', include('rest_framework.urls')),
 ]   

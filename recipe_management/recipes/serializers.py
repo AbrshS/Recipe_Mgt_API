@@ -9,7 +9,8 @@ class RecipeSerializer(serializers.ModelSerializer):
         read_only_fields = ['user', 'created_at', 'updated_at']
           # User, timestamps should not be manually modified 
 class ReviewSerializer(serializers.ModelSerializer):
+    user = serializers.ReadOnlyField(source='user.username')
+
     class Meta:
         model = Review
-        fields = ['id', 'user', 'recipe', 'rating', 'comment', 'created_at']
-        read_only_fields = ['user', 'recipe', 'created_at']
+        fields = ['user', 'rating', 'comment', 'created_at']

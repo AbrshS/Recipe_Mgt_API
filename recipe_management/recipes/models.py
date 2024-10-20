@@ -1,5 +1,8 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
+
 
 class Recipe(models.Model):
     CATEGORY_CHOICES = [
@@ -23,7 +26,9 @@ class Recipe(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     favorited_by = models.ManyToManyField(User, related_name='favorite_recipes', blank=True)
-    
+
+    def __str__(self):
+        return self.title
 
 class Review(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -32,6 +37,5 @@ class Review(models.Model):
     comment = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
-
     def __str__(self):
-        return self.title
+        return f"Review by {self.user.username} for {self.recipe.title}"
